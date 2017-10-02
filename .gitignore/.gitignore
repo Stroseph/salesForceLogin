@@ -1,0 +1,22 @@
+#NoEnv  ; Recommended for performance and compatibility with future AutoHotkey releases.
+; #Warn  ; Enable warnings to assist with detecting common errors.
+SendMode Input  ; Recommended for new scripts due to its superior speed and reliability.
+SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
+
+LOGINNAME := "Your Login Here"
+PASSWORD := "Your Password Here"
+
+URL := "https://360blue12345.my.salesforce.com/"
+Sleep, 120
+WB := ComObjCreate("InternetExplorer.Application")
+WB.Visible := True
+WinMaximize, % "ahk_id " WB.HWND
+WB.Navigate(URL)
+While wb.readyState != 4 || wb.document.readyState != "complete" || wb.busy 
+	Sleep, 10
+wb.document.getElementById("username").value := LOGINNAME
+wb.document.getElementById("password").value := PASSWORD
+wb.document.getElementById("Login").Click()
+While wb.readyState != 4 || wb.document.readyState != "complete" || wb.busy 
+	Sleep, 10
+return
